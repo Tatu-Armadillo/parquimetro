@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  db:
+    image: postgres
+    container_name: postgres_db
+    shm_size: 128mb
+    restart: always
+    environment:
+      POSTGRES_USER: parquimetro
+      POSTGRES_DB: parquimetro
+      POSTGRES_PASSWORD: parquimetro
+    ports:
+      - "3310:5432"
+    expose:
+      - "5432"
+    networks:
+      - collaborator-postgres-network
+  # app:
+  #   build: .
+  #   restart: always
+  #   container_name: spring_boot_app
+  #   environment:
+  #     SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_db:5432/parquimetro?currentSchema=challenge
+  #     SPRING_DATASOURCE_USERNAME: parquimetro
+  #     SPRING_DATASOURCE_PASSWORD: parquimetro
+  #   ports:
+  #     - "9090:9090"
+  #   depends_on:
+  #     - db
+networks:
+  collaborator-postgres-network:
+    driver: bridge
