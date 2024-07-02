@@ -16,16 +16,6 @@ Antes de executar o programa, há a necessidade de criar e executar uma imagem d
 docker-compose up -d
 ```
 
-Após verificar se o container está rodando corretamente, realize o build pelo maven
-```
-.\mvnw clean package
-```
-
-Rodar o seguinte comando para rodar o projeto
-```
-.\mvnw spring-boot:run
-```
-
 Link de acesso a documentação dos endpoints 
 ```
 http://localhost:9090/api/swagger-ui/index.html
