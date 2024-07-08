@@ -45,8 +45,7 @@ public class User implements UserDetails {
             })
     private Set<Permission> permissions;
 
-    public User() {
-    }
+    public User() { }
 
     public User(
             String userName,

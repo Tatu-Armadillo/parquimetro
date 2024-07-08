@@ -1,10 +1,10 @@
-do $$ 
-begin
-  if not exists (
-        select 1
-        from information_schema.schemata
-        where schema_name = 'challenge'
-    ) then
+-- do $$ 
+-- begin
+--   if not exists (
+--         select 1
+--         from information_schema.schemata
+--         where schema_name = 'challenge'
+--     ) then
         drop schema if exists challenge cascade; -- REMOVE
         create schema challenge;
 
@@ -30,14 +30,52 @@ begin
             primary key ( id_user, id_permission)
         );
 
+        create table address(
+            id_address bigserial primary key,
+            cep varchar(8) not null,
+            public_place varchar(255),
+            complement varchar(255),
+            neighborhood varchar(255),
+            city varchar(255) not null,
+            uf_state varchar(2) not null,
+            ibge varchar(7) not null
+        );
+
+        create table conductor(
+            id_conductor bigserial primary key,
+            name varchar(255) not null,
+            cpf varchar(11) unique not null,
+            phone varchar(13) unique not null,
+            email varchar(255) unique not null,
+            address bigint not null,
+            users bigint
+        );
+
+        create table vehicle(
+            id_vehicle bigserial primary key,
+            license_plate varchar(7) unique not null,
+            chassis varchar(17) unique not null,
+            manufacturing_year date not null,
+            model_year date not null,
+            brand varchar(255) not null,
+            model varchar(255) not null,
+            color varchar(100) not null,
+            fuel varchar(20) not null,
+            conductor bigint
+        ); 
+
+    alter table vehicle add constraint chk_fuel check (fuel in ('ALCOHOL', 'GASOLINE', 'NATURAL_GAS', 'ELECTRIC', 'HYDROGEN'));
 
     alter table user_permission add constraint fk_user_permission_user foreign key (id_user) references users (id_user);
     alter table user_permission add constraint fk_user_permission_permission foreign key (id_permission) references permission (id_permission);
-    
-    insert into challenge.permission (description) values ('ADMINISTRATOR');
+    alter table conductor add constraint fk_conductor_address foreign key (address) references address (id_address);
+    alter table conductor add constraint fk_conductor_users foreign key (users) references users (id_user);
+    alter table vehicle add constraint fk_vehicle_conductor foreign key (conductor) references conductor (id_conductor);
+
+    insert into challenge.permission (description) values ('ADMINISTRATOR'), ('CONDUCTOR');
     -- password 123456
     INSERT INTO challenge.users (user_name,full_name,"password",account_non_expired,account_non_locked,credentials_non_expired,enabled) VALUES ('adm','adm','$2a$10$PqsrFKSSRev9lL0BMAE.IOvDB4r6plBA7c45UDzz4v0Wu1Es9XMs.',true,true,true,true);
     INSERT INTO challenge.user_permission (id_user,id_permission) VALUES (1,1);
 
-    end if;
-end $$;
+--     end if;
+-- end $$;

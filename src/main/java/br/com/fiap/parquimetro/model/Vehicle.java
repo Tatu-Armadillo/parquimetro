@@ -1,0 +1,126 @@
+package br.com.fiap.parquimetro.model;
+
+import java.time.LocalDate;
+
+import br.com.fiap.parquimetro.model.enuns.FuelType;
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "vehicle")
+public class Vehicle {
+
+    @Id
+    @Column(name = "id_vehicle")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idVehicle;
+
+    @Column(name = "license_plate")
+    private String licensePlate;
+
+    @Column(name = "chassis")
+    private String chassis;
+
+    @Column(name = "manufacturing_year")
+    private LocalDate manufacturingYear;
+
+    @Column(name = "model_year")
+    private LocalDate modelYear;
+
+    @Column(name = "brand")
+    private String brand;
+
+    @Column(name = "model")
+    private String model;
+
+    @Column(name = "color")
+    private String color;
+
+    @Column(name = "fuel")
+    @Enumerated(EnumType.STRING)
+    private FuelType fuel;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "conductor", foreignKey = @ForeignKey(name = "fk_vehicle_conductor"))
+    private Conductor conductor;
+
+    public Long getIdVehicle() {
+        return idVehicle;
+    }
+
+    public void setIdVehicle(Long idVehicle) {
+        this.idVehicle = idVehicle;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
+
+    public String getChassis() {
+        return chassis;
+    }
+
+    public void setChassis(String chassis) {
+        this.chassis = chassis;
+    }
+
+    public LocalDate getManufacturingYear() {
+        return manufacturingYear;
+    }
+
+    public void setManufacturingYear(LocalDate manufacturingYear) {
+        this.manufacturingYear = manufacturingYear;
+    }
+
+    public LocalDate getModelYear() {
+        return modelYear;
+    }
+
+    public void setModelYear(LocalDate modelYear) {
+        this.modelYear = modelYear;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public FuelType getFuel() {
+        return fuel;
+    }
+
+    public void setFuel(FuelType fuel) {
+        this.fuel = fuel;
+    }
+
+    public Conductor getConductor() {
+        return conductor;
+    }
+
+    public void setConductor(Conductor conductor) {
+        this.conductor = conductor;
+    }
+
+}
