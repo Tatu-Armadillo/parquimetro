@@ -27,7 +27,7 @@ public class Address {
     private String city;
 
     @Column(name = "uf_state")
-    private String uf_state;
+    private String ufState;
 
     @Column(name = "ibge")
     private String ibge;
@@ -80,12 +80,12 @@ public class Address {
         this.city = city;
     }
 
-    public String getUf_state() {
-        return uf_state;
+    public String getUfState() {
+        return ufState;
     }
 
-    public void setUf_state(String uf_state) {
-        this.uf_state = uf_state;
+    public void setUfState(String ufState) {
+        this.ufState = ufState;
     }
 
     public String getIbge() {

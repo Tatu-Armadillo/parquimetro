@@ -75,7 +75,7 @@
     insert into challenge.permission (description) values ('ADMINISTRATOR'), ('CONDUCTOR');
     -- password 123456
     INSERT INTO challenge.users (user_name,full_name,"password",account_non_expired,account_non_locked,credentials_non_expired,enabled) VALUES ('adm','adm','$2a$10$PqsrFKSSRev9lL0BMAE.IOvDB4r6plBA7c45UDzz4v0Wu1Es9XMs.',true,true,true,true);
-    INSERT INTO challenge.user_permission (id_user,id_permission) VALUES (1,1);
+    INSERT INTO challenge.user_permission (id_user,id_permission) VALUES (1,1), (1,2);
 
 --     end if;
 -- end $$;
