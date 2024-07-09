@@ -1,5 +1,6 @@
 package br.com.fiap.parquimetro.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.parquimetro.exception.BusinessException;
@@ -11,6 +12,7 @@ public class AddressService {
 
     private final AddressRepository addressRepository;
 
+    @Autowired
     public AddressService(final AddressRepository addressRepository) {
         this.addressRepository = addressRepository;
     }

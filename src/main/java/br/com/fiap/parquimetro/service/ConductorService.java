@@ -1,5 +1,6 @@
 package br.com.fiap.parquimetro.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.parquimetro.model.Conductor;
@@ -12,6 +13,7 @@ public class ConductorService {
     private final UserService userService;
     private final AddressService addressService;
 
+    @Autowired
     public ConductorService(
             final ConductorRepository conductorRepository,
             final AddressService addressService,

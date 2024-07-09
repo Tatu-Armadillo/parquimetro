@@ -1,5 +1,6 @@
 package br.com.fiap.parquimetro.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ public class ConductorController {
 
     private final ConductorService conductorService;
 
+    @Autowired
     public ConductorController(final ConductorService conductorService) {
         this.conductorService = conductorService;
     }
