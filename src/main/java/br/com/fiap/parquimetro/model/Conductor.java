@@ -29,7 +29,7 @@ public class Conductor {
     @JoinColumn(name = "address", foreignKey = @ForeignKey(name = "fk_conductor_address"))
     private Address address;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "users", foreignKey = @ForeignKey(name = "fk_conductor_users"))
     private User user;
 
