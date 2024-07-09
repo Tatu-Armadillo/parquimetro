@@ -1,6 +1,6 @@
 package br.com.fiap.parquimetro.model;
 
-import java.time.LocalDate;
+import java.time.Year;
 
 import br.com.fiap.parquimetro.model.enuns.FuelType;
 import jakarta.persistence.*;
@@ -21,10 +21,10 @@ public class Vehicle {
     private String chassis;
 
     @Column(name = "manufacturing_year")
-    private LocalDate manufacturingYear;
+    private Year manufacturingYear;
 
     @Column(name = "model_year")
-    private LocalDate modelYear;
+    private Year modelYear;
 
     @Column(name = "brand")
     private String brand;
@@ -67,19 +67,19 @@ public class Vehicle {
         this.chassis = chassis;
     }
 
-    public LocalDate getManufacturingYear() {
+    public Year getManufacturingYear() {
         return manufacturingYear;
     }
 
-    public void setManufacturingYear(LocalDate manufacturingYear) {
+    public void setManufacturingYear(Year manufacturingYear) {
         this.manufacturingYear = manufacturingYear;
     }
 
-    public LocalDate getModelYear() {
+    public Year getModelYear() {
         return modelYear;
     }
 
-    public void setModelYear(LocalDate modelYear) {
+    public void setModelYear(Year modelYear) {
         this.modelYear = modelYear;
     }
 

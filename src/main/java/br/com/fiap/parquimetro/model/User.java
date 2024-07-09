@@ -45,6 +45,9 @@ public class User implements UserDetails {
             })
     private Set<Permission> permissions;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private Conductor conductor;
+
     public User() { }
 
     public User(
@@ -109,6 +112,14 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return this.enabled;
+    }
+
+    public Conductor getConductor() {
+        return conductor;
+    }
+
+    public void setConductor(Conductor conductor) {
+        this.conductor = conductor;
     }
 
 }

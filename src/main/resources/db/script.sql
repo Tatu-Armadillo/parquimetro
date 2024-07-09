@@ -55,8 +55,8 @@
             id_vehicle bigserial primary key,
             license_plate varchar(7) unique not null,
             chassis varchar(17) unique not null,
-            manufacturing_year date not null,
-            model_year date not null,
+            manufacturing_year integer not null,
+            model_year integer not null,
             brand varchar(255) not null,
             model varchar(255) not null,
             color varchar(100) not null,
@@ -64,7 +64,7 @@
             conductor bigint
         ); 
 
-    alter table vehicle add constraint chk_fuel check (fuel in ('ALCOHOL', 'GASOLINE', 'NATURAL_GAS', 'ELECTRIC', 'HYDROGEN'));
+    alter table vehicle add constraint chk_fuel check (fuel in ('ALCOHOL', 'GASOLINE', 'NATURAL_GAS', 'ELECTRIC', 'HYDROGEN', 'FLEX_ALCOHOL_GASOLINE', 'HYBRID_ALCOHOL_GASOLINE_ELECTRIC'));
 
     alter table user_permission add constraint fk_user_permission_user foreign key (id_user) references users (id_user);
     alter table user_permission add constraint fk_user_permission_permission foreign key (id_permission) references permission (id_permission);

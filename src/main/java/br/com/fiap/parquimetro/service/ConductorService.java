@@ -3,6 +3,7 @@ package br.com.fiap.parquimetro.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.fiap.parquimetro.exception.BusinessException;
 import br.com.fiap.parquimetro.model.Conductor;
 import br.com.fiap.parquimetro.repository.ConductorRepository;
 
@@ -29,6 +30,14 @@ public class ConductorService {
         final var address = this.addressService.save(conductor.getAddress());
         conductor.setAddress(address);
         return this.conductorRepository.save(conductor);
+    }
+
+    public Conductor getConductorByToken(final String token) {
+        final var user = this.userService.findUserByToken(token);
+
+        return this.conductorRepository.getConductorByToken(user.getUsername())
+                .orElseThrow(() -> new BusinessException(
+                        "m=getConductorByToken - Conductor not found with this user: " + user.getUsername()));
     }
 
 }
