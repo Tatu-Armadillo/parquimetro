@@ -60,7 +60,8 @@
             brand varchar(255) not null,
             model varchar(255) not null,
             color varchar(100) not null,
-            fuel varchar(20) not null,
+            fuel varchar(35) not null,
+            buy_date date not null,
             conductor bigint
         ); 
 

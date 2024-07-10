@@ -1,5 +1,6 @@
 package br.com.fiap.parquimetro.model;
 
+import java.time.LocalDate;
 import java.time.Year;
 
 import br.com.fiap.parquimetro.model.enuns.FuelType;
@@ -38,6 +39,9 @@ public class Vehicle {
     @Column(name = "fuel")
     @Enumerated(EnumType.STRING)
     private FuelType fuel;
+
+    @Column(name = "buy_date")
+    private LocalDate buyDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "conductor", foreignKey = @ForeignKey(name = "fk_vehicle_conductor"))
@@ -113,6 +117,14 @@ public class Vehicle {
 
     public void setFuel(FuelType fuel) {
         this.fuel = fuel;
+    }
+
+    public LocalDate getBuyDate() {
+        return buyDate;
+    }
+
+    public void setBuyDate(LocalDate buyDate) {
+        this.buyDate = buyDate;
     }
 
     public Conductor getConductor() {

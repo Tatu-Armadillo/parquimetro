@@ -1,5 +1,7 @@
 package br.com.fiap.parquimetro.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.parquimetro.model.Vehicle;
@@ -20,6 +22,11 @@ public class VehicleService {
         final var conductor = this.conductorService.getConductorByToken(token);
         entity.setConductor(conductor);
         return this.vehicleRepository.save(entity);
+    }
+
+    public Page<Vehicle> findVehiclesByConductor(final Pageable pageable, final String token) {
+        final var conductor = this.conductorService.getConductorByToken(token);
+        return this.vehicleRepository.findVehiclesByConductor(pageable, conductor);
     }
 
 }
