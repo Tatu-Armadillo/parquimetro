@@ -78,7 +78,7 @@
             time_fixed boolean not null,
             time_start timestamp,
             time_end timestamp,
-            total_time time,
+            total_time integer,
             total_price numeric(10,2),
             vehicle bigint,
             establishment bigint
@@ -107,7 +107,7 @@
         alter table parking add constraint fk_parking_establishment foreign key (establishment) references establishment (id_establishment);
         alter table payment add constraint fk_payment_parking foreign key (parking) references parking (id_parking);
 
-        insert into challenge.permission (description) values ('ADMINISTRATOR'), ('CONDUCTOR'), ('OWNER');
+        insert into challenge.permission (description) values ('ADMINISTRATOR'), ('CONDUCTOR'), ('OWNER_ESTABLISHMENT');
         -- password 123456
         insert into challenge.users (user_name,full_name,"password",account_non_expired,account_non_locked,credentials_non_expired,enabled) VALUES ('adm','adm','$2a$10$PqsrFKSSRev9lL0BMAE.IOvDB4r6plBA7c45UDzz4v0Wu1Es9XMs.',true,true,true,true);
         insert into challenge.user_permission (id_user,id_permission) VALUES (1,1), (1,2), (1,3);
