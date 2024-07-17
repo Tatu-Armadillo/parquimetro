@@ -1,6 +1,5 @@
 package br.com.fiap.parquimetro.model;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
@@ -24,10 +23,7 @@ public class Parking {
     private LocalDateTime timeEnd;
 
     @Column(name = "total_time")
-    private Integer totalTime;
-
-    @Column(name = "total_price")
-    private BigDecimal totalPrice;
+    private Long totalTime;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vehicle", foreignKey = @ForeignKey(name = "fk_parking_vehicle"))
@@ -69,20 +65,12 @@ public class Parking {
         this.timeEnd = timeEnd;
     }
 
-    public Integer getTotalTime() {
+    public Long getTotalTime() {
         return totalTime;
     }
 
-    public void setTotalTime(Integer totalTime) {
+    public void setTotalTime(Long totalTime) {
         this.totalTime = totalTime;
-    }
-
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     public Vehicle getVehicle() {

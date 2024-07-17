@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import br.com.fiap.parquimetro.exception.BusinessException;
 import br.com.fiap.parquimetro.model.Vehicle;
 import br.com.fiap.parquimetro.repository.VehicleRepository;
 
@@ -27,6 +28,12 @@ public class VehicleService {
     public Page<Vehicle> findVehiclesByConductor(final Pageable pageable, final String token) {
         final var conductor = this.conductorService.getConductorByToken(token);
         return this.vehicleRepository.findVehiclesByConductor(pageable, conductor);
+    }
+
+    public Vehicle findVehicleByLicensePlate(final String licensePlate) {
+        return this.vehicleRepository.findVehicleByLicensePlate(licensePlate)
+                .orElseThrow(() -> new BusinessException(
+                        "m=findVehicleByLicensePlate Not found Vehicle with License_Plate = " + licensePlate));
     }
 
 }

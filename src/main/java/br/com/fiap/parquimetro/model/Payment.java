@@ -1,5 +1,6 @@
 package br.com.fiap.parquimetro.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
@@ -24,6 +25,9 @@ public class Payment {
 
     @Column(name = "payment_completed")
     private Boolean paymentCompleted;
+
+    @Column(name = "total_price")
+    private BigDecimal totalPrice;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parking", foreignKey = @ForeignKey(name = "fk_payment_parking"))
@@ -67,6 +71,14 @@ public class Payment {
 
     public void setPaymentCompleted(Boolean paymentCompleted) {
         this.paymentCompleted = paymentCompleted;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public Parking getParking() {

@@ -98,8 +98,6 @@
         alter table conductor add constraint chk_payment_format_payment check (payment_format in ('CREDIT_CARD', 'DEBIT_CARD', 'PIX'));
         alter table payment add constraint chk_payment_format_payment check (payment_format in ('CREDIT_CARD', 'DEBIT_CARD', 'PIX'));
 
-
-
         alter table user_permission add constraint fk_user_permission_user foreign key (id_user) references users (id_user);
         alter table user_permission add constraint fk_user_permission_permission foreign key (id_permission) references permission (id_permission);
         alter table conductor add constraint fk_conductor_address foreign key (address) references address (id_address);
