@@ -1,4 +1,4 @@
--- do $$ 
+-- do $$
 -- begin
 --   if not exists (
 --         select 1
@@ -47,6 +47,7 @@
             cpf varchar(11) unique not null,
             phone varchar(13) unique not null,
             email varchar(255) unique not null,
+            payment_format varchar(11) not null,
             address bigint not null,
             users bigint
         );
@@ -63,7 +64,7 @@
             fuel varchar(35) not null,
             buy_date date not null,
             conductor bigint
-        ); 
+        );
 
         create table establishment(
             id_establishment bigserial primary key,
@@ -94,7 +95,10 @@
         );
 
         alter table vehicle add constraint chk_fuel check (fuel in ('ALCOHOL', 'GASOLINE', 'DIESEL', 'NATURAL_GAS', 'ELECTRIC', 'HYDROGEN', 'FLEX_ALCOHOL_GASOLINE', 'HYBRID_ALCOHOL_GASOLINE_ELECTRIC'));
-        alter table payment add constraint chk_payment_format check (payment_format in ('CREDIT_CARD', 'DEBIT_CARD', 'PIX'));
+        alter table conductor add constraint chk_payment_format_payment check (payment_format in ('CREDIT_CARD', 'DEBIT_CARD', 'PIX'));
+        alter table payment add constraint chk_payment_format_payment check (payment_format in ('CREDIT_CARD', 'DEBIT_CARD', 'PIX'));
+
+
 
         alter table user_permission add constraint fk_user_permission_user foreign key (id_user) references users (id_user);
         alter table user_permission add constraint fk_user_permission_permission foreign key (id_permission) references permission (id_permission);

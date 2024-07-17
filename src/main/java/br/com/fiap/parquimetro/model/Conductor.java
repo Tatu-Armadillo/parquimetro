@@ -2,6 +2,7 @@ package br.com.fiap.parquimetro.model;
 
 import java.util.Set;
 
+import br.com.fiap.parquimetro.model.enuns.PaymentFormat;
 import jakarta.persistence.*;
 
 @Entity
@@ -24,6 +25,10 @@ public class Conductor {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "payment_format")
+    @Enumerated(EnumType.STRING)
+    private PaymentFormat paymentFormat;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address", foreignKey = @ForeignKey(name = "fk_conductor_address"))
@@ -74,6 +79,14 @@ public class Conductor {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public PaymentFormat getPaymentFormat() {
+        return paymentFormat;
+    }
+
+    public void setPaymentFormat(PaymentFormat paymentFormat) {
+        this.paymentFormat = paymentFormat;
     }
 
     public Address getAddress() {
