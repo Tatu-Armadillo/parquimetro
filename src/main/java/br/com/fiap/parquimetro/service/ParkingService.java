@@ -28,7 +28,7 @@ public class ParkingService {
         this.establishmentService = establishmentService;
     }
 
-    public Parking horsParkingVehicle(final Parking parking) {
+    public Parking initHoursParking(final Parking parking) {
         final var vehicle = this.vehicleService.findVehicleByLicensePlate(parking.getVehicle().getLicensePlate());
         parking.setVehicle(vehicle);
 

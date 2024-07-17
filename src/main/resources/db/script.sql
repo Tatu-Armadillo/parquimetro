@@ -69,6 +69,7 @@
         create table establishment(
             id_establishment bigserial primary key,
             name varchar(255) not null,
+            cnpj varchar(14) unique not null,
             price_hour numeric(10,2) not null,
             address bigint not null,
             users bigint
