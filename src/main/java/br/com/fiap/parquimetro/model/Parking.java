@@ -13,6 +13,9 @@ public class Parking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idParking;
 
+    @Column(name = "create_date")
+    private LocalDateTime createDate;
+
     @Column(name = "time_fixed")
     private boolean timeFixed;
 
@@ -39,6 +42,14 @@ public class Parking {
 
     public void setIdParking(Long idParking) {
         this.idParking = idParking;
+    }
+
+    public LocalDateTime getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
     }
 
     public boolean isTimeFixed() {

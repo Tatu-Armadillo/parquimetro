@@ -38,4 +38,12 @@ public class EstablishmentService {
                         "m=findEstablishmentByCnpj Not Found Establishment with CNPJ = " + cnpj));
     }
 
+    public Establishment getEstablishmentByToken(final String token) {
+        final var user = this.userService.findUserByToken(token);
+
+        return this.establishmentRepository.getEstablishmentByToken(user.getUsername())
+                .orElseThrow(() -> new BusinessException(
+                        "m=getEstablishmentByToken - Establishment not found with this user: " + user.getUsername()));
+    }
+
 }

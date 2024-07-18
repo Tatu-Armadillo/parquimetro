@@ -45,4 +45,23 @@ public class ParkingController {
         return ResponseEntity.ok(base);
     }
 
+    @PatchMapping("/closed")
+    @PreAuthorize("hasRole('OWNER_ESTABLISHMENT')")
+    @Transactional
+    @SecurityRequirement(name = "bearer-key")
+    @Operation(summary = "Closed Parking", description = "Closed parking with uncertain hours ", tags = {
+            "Parking" }, responses = {
+                    @ApiResponse(description = "Create", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ParkingRecord.class))),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            })
+    public ResponseEntity<ResponseBase<ParkingRecord>> closedUncertainHours(
+            @RequestHeader("Authorization") final String token,
+            @RequestParam(name = "licensePlate", defaultValue = "") final String licensePlate) {
+        final var response = this.parkingService.closedParking(token, licensePlate);
+        final var base = ResponseBase.of(ParkingRecord.toRecord(response));
+        return ResponseEntity.ok(base);
+    }
+
 }

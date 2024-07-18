@@ -77,10 +77,11 @@
 
         create table parking(
             id_parking bigserial primary key,
+            create_date timestamp not null,
             time_fixed boolean not null,
             time_start timestamp,
             time_end timestamp,
-            total_time integer,
+            total_time integer, -- representation in minutes 
             total_price numeric(10,2),
             vehicle bigint,
             establishment bigint
