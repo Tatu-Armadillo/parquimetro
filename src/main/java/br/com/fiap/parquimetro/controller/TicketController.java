@@ -3,8 +3,10 @@ package br.com.fiap.parquimetro.controller;
 import br.com.fiap.parquimetro.model.FixedPeriodTicket;
 import br.com.fiap.parquimetro.repository.TicketRepository;
 import br.com.fiap.parquimetro.service.FixedPeriodTicketService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +19,8 @@ public class TicketController {
     private FixedPeriodTicketService fixedPeriodTicketService;
 
     @GetMapping
+    @PreAuthorize("hasRole('CONDUCTOR')")
+    @SecurityRequirement(name = "bearer-key")
     public List<FixedPeriodTicket> getAll(){
         return this.fixedPeriodTicketService.getAll();
     }
