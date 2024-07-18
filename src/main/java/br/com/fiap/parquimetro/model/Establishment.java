@@ -15,6 +15,9 @@ public class Establishment {
     
     @Column(name = "name")
     private String name;
+    
+    @Column(name = "cnpj")
+    private String cnpj;
 
     @Column(name = "price_hour")
     private BigDecimal priceHour;
@@ -41,6 +44,14 @@ public class Establishment {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public BigDecimal getPriceHour() {

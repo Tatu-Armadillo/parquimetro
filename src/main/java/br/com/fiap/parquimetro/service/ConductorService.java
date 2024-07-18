@@ -34,7 +34,6 @@ public class ConductorService {
 
     public Conductor getConductorByToken(final String token) {
         final var user = this.userService.findUserByToken(token);
-
         return this.conductorRepository.getConductorByToken(user.getUsername())
                 .orElseThrow(() -> new BusinessException(
                         "m=getConductorByToken - Conductor not found with this user: " + user.getUsername()));
