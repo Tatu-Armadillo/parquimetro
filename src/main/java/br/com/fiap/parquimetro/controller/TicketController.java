@@ -1,11 +1,10 @@
 package br.com.fiap.parquimetro.controller;
 
-import br.com.fiap.parquimetro.model.FixedPeriodTicket;
-import br.com.fiap.parquimetro.repository.TicketRepository;
-import br.com.fiap.parquimetro.service.FixedPeriodTicketService;
+import br.com.fiap.parquimetro.dto.MongoParkingDTO;
+import br.com.fiap.parquimetro.model.MongoParking;
+import br.com.fiap.parquimetro.service.MongoParkingService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,22 +15,27 @@ import java.util.List;
 public class TicketController {
 
     @Autowired
-    private FixedPeriodTicketService fixedPeriodTicketService;
+    private MongoParkingService mongoParkingService;
 
     @GetMapping
     @PreAuthorize("hasRole('CONDUCTOR')")
     @SecurityRequirement(name = "bearer-key")
-    public List<FixedPeriodTicket> getAll(){
-        return this.fixedPeriodTicketService.getAll();
+    public List<MongoParking> getAll(){
+        return this.mongoParkingService.getAll();
     }
 
     @GetMapping("/{id}")
-    public FixedPeriodTicket getById(@PathVariable String id){
-        return this.fixedPeriodTicketService.getById(id);
+    @PreAuthorize("hasRole('CONDUCTOR')")
+    @SecurityRequirement(name = "bearer-key")
+    public MongoParking getById(@PathVariable String id){
+        return this.mongoParkingService.getById(id);
     }
 
     @PostMapping
-    public FixedPeriodTicket create(@RequestBody FixedPeriodTicket fixedPeriodTicket){
-        return this.fixedPeriodTicketService.create(fixedPeriodTicket);
+    @PreAuthorize("hasRole('CONDUCTOR')")
+    @SecurityRequirement(name = "bearer-key")
+    public MongoParking create(@RequestBody MongoParkingDTO mongoParkingDTO){
+        MongoParking insertObject = new MongoParking(mongoParkingDTO);
+        return this.mongoParkingService.create(insertObject);
     }
 }
