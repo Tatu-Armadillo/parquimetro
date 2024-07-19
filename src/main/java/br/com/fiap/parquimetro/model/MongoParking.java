@@ -17,7 +17,13 @@ public class MongoParking {
     @Id
     private String idParking;
 
+    private boolean isActive;
+
     private LocalDateTime createDate;
+
+    private boolean isRenewalNotificationSent;
+
+    private LocalDateTime nextNotificaionTimeScheduled;
 
     private Long idPayment;
 
@@ -33,6 +39,9 @@ public class MongoParking {
         this.idPayment = mongoParkingDTO.getIdPayment();
         this.idVehicle = mongoParkingDTO.getIdVehicle();
         this.timeStart = mongoParkingDTO.getTimeStart();
+        this.isRenewalNotificationSent = false;
+        this.nextNotificaionTimeScheduled = LocalDateTime.now().plusHours(1);
+        this.isActive = true;
     }
 
 }
