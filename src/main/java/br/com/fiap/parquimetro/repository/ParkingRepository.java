@@ -1,6 +1,8 @@
 package br.com.fiap.parquimetro.repository;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,5 +24,10 @@ public interface ParkingRepository extends JpaRepository<Parking, Long> {
         Optional<Parking> findParkingByVehicleAndEstablishment(
                         @Param("licensePlate") String licensePlate,
                         @Param("cnpj") String cnpj);
+
+
+        @Query(" SELECT parking FROM Parking parking "
+         + " WHERE parking.timeEnd BETWEEN CURRENT_TIMESTAMP AND :expirationDate ")        
+        Set<Parking> findParkingsWithExpirationDate(@Param("expirationDate") LocalDateTime expirationDate);
 
 }
