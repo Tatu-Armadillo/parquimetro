@@ -38,4 +38,13 @@ public class TicketController {
         MongoParking insertObject = new MongoParking(mongoParkingDTO);
         return this.mongoParkingService.create(insertObject);
     }
+
+    @DeleteMapping
+    @PreAuthorize("hasRole('CONDUCTOR')")
+    @SecurityRequirement(name = "bearer-key")
+    public void deleteAllDocumentsInParquimetro(){
+        this.mongoParkingService.deleteAllDocumentsInParquimetro();
+    }
+
+
 }

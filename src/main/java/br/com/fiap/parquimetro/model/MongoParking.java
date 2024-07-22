@@ -21,25 +21,19 @@ public class MongoParking {
 
     private LocalDateTime createDate;
 
-    private boolean isRenewalNotificationSent;
-
     private LocalDateTime nextNotificaionTimeScheduled;
 
     private Long idPayment;
-
-    private LocalDateTime timeStart;
 
     private Long idVehicle;
 
     private Long idEstablishment;
 
     public MongoParking(MongoParkingDTO mongoParkingDTO){
-        this.createDate = mongoParkingDTO.getCreateDate();
         this.idEstablishment = mongoParkingDTO.getIdEstablishment();
         this.idPayment = mongoParkingDTO.getIdPayment();
         this.idVehicle = mongoParkingDTO.getIdVehicle();
-        this.timeStart = mongoParkingDTO.getTimeStart();
-        this.isRenewalNotificationSent = false;
+        this.createDate = LocalDateTime.now();
         this.nextNotificaionTimeScheduled = LocalDateTime.now().plusHours(1);
         this.isActive = true;
     }
