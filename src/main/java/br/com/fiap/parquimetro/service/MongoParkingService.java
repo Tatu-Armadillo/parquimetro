@@ -52,8 +52,12 @@ public class MongoParkingService {
     public void checkForRenewalParking(){
         System.out.println("VERIFICANDO PARA ENVIAR NOTIFICAÇÃO DE RENOVAÇÃO");
         List<MongoParking> mongoParkingListToRenewalAlert = this.getUnnotifiedParkingLots();
-        mongoParkingListToRenewalAlert.forEach(banana -> System.out.println("ENVIANDO NOTIFICAÇÃO DE RENOVAÇÃO")); // TODO: Implementar lógica
+        mongoParkingListToRenewalAlert.forEach(banana -> System.out.println("ENVIANDO NOTIFICAÇÃO DE RENOVAÇÃO"));
+        // TODO: Implement email sending logic
+        // TODO: Implement notification time change logic
     }
+
+    // TODO: Implement function to turn parking to inactive
 
 
 
