@@ -1,5 +1,5 @@
-version: '3.9'
 
+version: '3.9'
 services:
   db:
     image: postgres
@@ -15,7 +15,7 @@ services:
     expose:
       - "5432"
     networks:
-      - parquimetro-network
+      - parquimetro-postgres-network
 
   mongo:
     image: mongo:latest
@@ -31,9 +31,8 @@ services:
     volumes:
       - mongo_data:/data/db
     networks:
-      - parquimetro-network
       - parquimetro-postgres-network
-      
+
   mailhog: # Tests Emails
     image: mailhog/mailhog
     container_name: mailhog
@@ -42,7 +41,7 @@ services:
       - "8025:8025"  # Interface Web
     networks:
       - parquimetro-postgres-network
-      
+
   app:
     build: .
     restart: always
@@ -53,21 +52,15 @@ services:
       DB_NAME: parquimetro
       DB_USER: parquimetro
       DB_PASSWORD: parquimetro
-      MONGO_HOST: mongo_container
-      MONGO_PORT: 27017
-      MONGO_DB: mongo
-      MONGO_USER: mongo
-      MONGO_PASSWORD: mongo
     ports:
       - "9090:9090"
     depends_on:
       - db
-      - mongo
     networks:
-      - parquimetro-network
+      - parquimetro-postgres-network
 
 networks:
-  parquimetro-network:
+  parquimetro-postgres-network:
     driver: bridge
 
 volumes:
