@@ -2,6 +2,7 @@ package br.com.fiap.parquimetro.service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,6 +64,10 @@ public class ParkingService {
         return this.parkingRepository.findParkingByVehicleAndEstablishment(licensePlate, cnpj)
                 .orElseThrow(() -> new BusinessException(
                         "m=findParkingByVehiclelicensePlate Not found Parking with vehicle = " + licensePlate));
+    }
+
+    public Set<Parking> findParkingsWithExpirationDate(final LocalDateTime expirateDate) {
+        return this.parkingRepository.findParkingsWithExpirationDate(expirateDate.plusHours(2L));
     }
 
     private void uncertainHours(final Parking parking) {
