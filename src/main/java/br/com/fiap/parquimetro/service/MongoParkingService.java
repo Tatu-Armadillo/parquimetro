@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,9 @@ import java.util.List;
 public class MongoParkingService {
 
     private final MongoTemplate mongoTemplate;
+
+    @Autowired
+    private MessageService messageService;
 
     public MongoParkingService (MongoTemplate mongoTemplate){
         this.mongoTemplate = mongoTemplate;
@@ -38,7 +42,8 @@ public class MongoParkingService {
     }
 
     public List<MongoParking> getUnnotifiedParkingLots(){
-        Query query = new Query(Criteria.where("nextNotificaionTimeScheduled").lt(LocalDateTime.now()));
+        Query query = new Query(Criteria.where("nextNotificaionTimeScheduled").lt(LocalDateTime.now())
+                .and("isActive").is(true));
         return mongoTemplate.find(query, MongoParking.class);
     }
 
@@ -48,16 +53,31 @@ public class MongoParkingService {
         }
     }
 
-    @Scheduled(fixedRate = 60000)
-    public void checkForRenewalParking(){
-        System.out.println("VERIFICANDO PARA ENVIAR NOTIFICAÇÃO DE RENOVAÇÃO");
-        List<MongoParking> mongoParkingListToRenewalAlert = this.getUnnotifiedParkingLots();
-        mongoParkingListToRenewalAlert.forEach(banana -> System.out.println("ENVIANDO NOTIFICAÇÃO DE RENOVAÇÃO"));
-        // TODO: Implement email sending logic
-        // TODO: Implement notification time change logic
+    public void turnIncertainParkingIntoInactive(String id){
+        Query query = new Query(Criteria.where("idParking").is(id));
+        Update update = new Update().set("isActive", false);
+        mongoTemplate.updateFirst(query, update, MongoParking.class);
     }
 
-    // TODO: Implement function to turn parking to inactive
+    public void addOneHourToNextNotificationTime(String id) {
+        MongoParking parking = mongoParkingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Parking not found!"));
+        LocalDateTime newTime = parking.getNextNotificaionTimeScheduled().plusHours(1);
+
+        Query query = new Query(Criteria.where("id").is(id));
+        Update update = new Update().set("nextNotificaionTimeScheduled", newTime);
+        mongoTemplate.updateFirst(query, update, MongoParking.class);
+    }
+
+    @Scheduled(fixedRate = 60000)
+    public void checkForRenewalParking(){
+        System.out.println("Verifying parkings to send renewal notification");
+        for (MongoParking unnotifiedParkingLot :this.getUnnotifiedParkingLots()){
+            messageService.sendSimpleEmailMessage(unnotifiedParkingLot.getUserEmail(),
+                    "Parking time renewal",
+                    "Your parking is getting renewal for 1 hour");
+            this.addOneHourToNextNotificationTime(unnotifiedParkingLot.getIdParking());
+        }
+    }
 
 
 

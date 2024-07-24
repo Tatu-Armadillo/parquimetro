@@ -72,7 +72,7 @@ public class ParkingController {
     }
 
     @PostMapping("/uncertain_hours")
-    @PreAuthorize("hasRole('ADMINISTRATOR')")
+    @PreAuthorize("hasRole('CONDUCTOR')")
     @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Create uncertain hour ticket", responses = {
             @ApiResponse(description = "Create", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MongoParking.class))),
@@ -86,7 +86,7 @@ public class ParkingController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMINISTRATOR')")
+    @PreAuthorize("hasRole('CONDUCTOR')")
     @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Retrieve uncertain hour ticket by ID", responses = {
             @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MongoParking.class))),
@@ -98,6 +98,17 @@ public class ParkingController {
         // TODO: Insert User ID on JWT token and retrieve parking which is associated with them.
         return this.mongoParkingService.getById(id);
     }
+
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('CONDUCTOR')")
+    @SecurityRequirement(name = "bearer-key")
+    @Operation(summary = "Turn a specific parking with uncertain into inactive by ID")
+    public void turnIncertainParkingIntoInactive(@PathVariable String id){
+        // TODO: Send the receipt to the user
+        this.mongoParkingService.turnIncertainParkingIntoInactive(id);
+    }
+
+
     }
 
 
