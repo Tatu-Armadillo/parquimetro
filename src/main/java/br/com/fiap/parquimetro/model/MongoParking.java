@@ -22,7 +22,7 @@ public class MongoParking {
 
     private LocalDateTime createDate;
 
-    private LocalDateTime nextNotificaionTimeScheduled;
+    private LocalDateTime nextNotificationTimeScheduled;
 
     private Long idPayment;
 
@@ -33,8 +33,12 @@ public class MongoParking {
 
     private Long idEstablishment;
 
-    public LocalDateTime getNextNotificaionTimeScheduled() {
-        return nextNotificaionTimeScheduled;
+    public LocalDateTime getNextNotificationTimeScheduled() {
+        return nextNotificationTimeScheduled;
+    }
+
+    public LocalDateTime getCreateDate() {
+        return createDate;
     }
 
     public String getIdParking() {
@@ -51,7 +55,7 @@ public class MongoParking {
         this.idVehicle = mongoParkingDTO.getIdVehicle();
         this.userEmail = mongoParkingDTO.getUserEmail();
         this.createDate = LocalDateTime.now();
-        this.nextNotificaionTimeScheduled = LocalDateTime.now().plusHours(1);
+        this.nextNotificationTimeScheduled = LocalDateTime.now().plusHours(1);
         this.isActive = true;
     }
 

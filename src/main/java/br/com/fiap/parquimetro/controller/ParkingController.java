@@ -3,7 +3,9 @@ package br.com.fiap.parquimetro.controller;
 import br.com.fiap.parquimetro.dto.MongoParkingDTO;
 import br.com.fiap.parquimetro.model.MongoParking;
 import br.com.fiap.parquimetro.records.vehicle.VehicleRecord;
+import br.com.fiap.parquimetro.service.MessageService;
 import br.com.fiap.parquimetro.service.MongoParkingService;
+import br.com.fiap.parquimetro.service.job.ReceiptConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,6 +29,9 @@ public class ParkingController {
 
     @Autowired
     private MongoParkingService mongoParkingService;
+
+    @Autowired
+    private ReceiptConstructor receiptConstructor;
 
     private final ParkingService parkingService;
 
@@ -103,9 +108,10 @@ public class ParkingController {
     @PreAuthorize("hasRole('CONDUCTOR')")
     @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Turn a specific parking with uncertain into inactive by ID")
-    public void turnIncertainParkingIntoInactive(@PathVariable String id){
-        // TODO: Send the receipt to the user
-        this.mongoParkingService.turnIncertainParkingIntoInactive(id);
+    public MongoParking turnIncertainParkingIntoInactive(@PathVariable String id){
+        MongoParking updatedParking = this.mongoParkingService.turnIncertainParkingIntoInactive(id);
+        this.receiptConstructor.sendUncertainParkingReceipt(updatedParking);
+        return updatedParking;
     }
 
 

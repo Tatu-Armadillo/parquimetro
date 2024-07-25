@@ -53,24 +53,24 @@ public class MongoParkingService {
         }
     }
 
-    public void turnIncertainParkingIntoInactive(String id){
+    public MongoParking turnIncertainParkingIntoInactive(String id){
         Query query = new Query(Criteria.where("idParking").is(id));
         Update update = new Update().set("isActive", false);
-        mongoTemplate.updateFirst(query, update, MongoParking.class);
+        return mongoTemplate.findAndModify(query, update, MongoParking.class);
     }
 
     public void addOneHourToNextNotificationTime(String id) {
         MongoParking parking = mongoParkingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Parking not found!"));
-        LocalDateTime newTime = parking.getNextNotificaionTimeScheduled().plusHours(1);
+        LocalDateTime newTime = parking.getNextNotificationTimeScheduled().plusHours(1);
 
         Query query = new Query(Criteria.where("id").is(id));
-        Update update = new Update().set("nextNotificaionTimeScheduled", newTime);
+        Update update = new Update().set("nextNotificationTimeScheduled", newTime);
         mongoTemplate.updateFirst(query, update, MongoParking.class);
     }
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 300000) // 5 minutes
     public void checkForRenewalParking(){
-        System.out.println("Verifying parkings to send renewal notification");
+        System.out.println("Verifying parking's to send renewal notification");
         for (MongoParking unnotifiedParkingLot :this.getUnnotifiedParkingLots()){
             messageService.sendSimpleEmailMessage(unnotifiedParkingLot.getUserEmail(),
                     "Parking time renewal",
