@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping(value= "/tickets")
-@Tag(name = "Tickets (Mongo Implementation)", description = "Administrative management resources")
+//@RestController
+//@RequestMapping(value= "/tickets")
+//@Tag(name = "Tickets (Mongo Implementation)", description = "Administrative management resources")
 public class TicketController {
 
     @Autowired
