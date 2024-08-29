@@ -18,19 +18,21 @@ public class ParkingService {
     private final ParkingRepository parkingRepository;
     private final VehicleService vehicleService;
     private final EstablishmentService establishmentService;
+    private final PaymentService paymentService;
 
     @Autowired
     public ParkingService(
             final ParkingRepository parkingRepository,
             final VehicleService vehicleService,
-            final EstablishmentService establishmentService) {
+            final EstablishmentService establishmentService,
+            final PaymentService paymentService) {
         this.parkingRepository = parkingRepository;
         this.vehicleService = vehicleService;
         this.establishmentService = establishmentService;
+        this.paymentService = paymentService;
     }
 
     public Parking initHoursParking(final Parking parking) {
-
         this.verifyVehicleIsParking(parking.getVehicle().getLicensePlate(), parking.getEstablishment().getCnpj());
 
         final var vehicle = this.vehicleService.findVehicleByLicensePlate(parking.getVehicle().getLicensePlate());
@@ -57,10 +59,12 @@ public class ParkingService {
         parking.setTimeEnd(LocalDateTime.now());
         this.fixedHours(parking);
 
+        paymentService.processPayment(parking);
+
         return this.parkingRepository.save(parking);
     }
 
-    private Parking findParkingByVehiclelicensePlate(final String licensePlate, final String cnpj) {
+    public Parking findParkingByVehiclelicensePlate(final String licensePlate, final String cnpj) {
         return this.parkingRepository.findParkingByVehicleAndEstablishment(licensePlate, cnpj)
                 .orElseThrow(() -> new BusinessException(
                         "m=findParkingByVehiclelicensePlate Not found Parking with vehicle = " + licensePlate));
