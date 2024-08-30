@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class MongoParkingDTO {
     private Long idPayment;
 
-    private Long idVehicle;
+    private String idVehicle;
 
     private Long idEstablishment;
 
@@ -28,7 +28,7 @@ public class MongoParkingDTO {
         return idPayment;
     }
 
-    public Long getIdVehicle() {
+    public String getIdVehicle() {
         return idVehicle;
     }
 

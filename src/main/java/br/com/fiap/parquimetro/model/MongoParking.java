@@ -29,7 +29,7 @@ public class MongoParking {
     @Email
     private String userEmail;
 
-    private Long idVehicle;
+    private String idVehicle;
 
     private Long idEstablishment;
 
